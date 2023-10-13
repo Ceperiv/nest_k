@@ -5,6 +5,8 @@ import { UserModule } from './users/user.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { UserModel } from './users/user.model';
+import { CustomerAssistanceController } from './customer-assistance/customer-assistance.controller';
+import { CustomerAssistanceModule } from './customer-assistance/customer-assistance.module';
 
 @Module({
   imports: [
@@ -22,8 +24,9 @@ import { UserModel } from './users/user.model';
       models: [UserModel],
       autoLoadModels: true,
     }),
+    CustomerAssistanceModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, CustomerAssistanceController],
   providers: [AppService],
 })
 export class AppModule {}
