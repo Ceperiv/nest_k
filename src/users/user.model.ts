@@ -1,4 +1,5 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Table({ tableName: 'Users_' })
 export class UserModel extends Model<UserModel> {
@@ -9,6 +10,10 @@ export class UserModel extends Model<UserModel> {
   })
   id?: number;
 
+  @ApiProperty({
+    example: 'Ivan',
+    required: false,
+  })
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
