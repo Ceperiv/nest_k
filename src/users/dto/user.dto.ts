@@ -6,10 +6,15 @@ import {
   IsString,
   Length,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
   id?: number;
 
+  @ApiProperty({
+    required: true,
+    example: 'Ivan',
+  })
   @IsString()
   @Length(2)
   name: string;
