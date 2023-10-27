@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsInt, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class Tickets {
   id?: number;
@@ -6,6 +6,11 @@ export class Tickets {
   @IsString()
   @IsOptional()
   type: string;
+
+  @IsNumber()
+  @IsOptional()
+  @IsInt()
+  amount: number;
 
   @IsNumber()
   @IsOptional()
