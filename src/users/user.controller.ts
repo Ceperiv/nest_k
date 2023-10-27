@@ -11,21 +11,20 @@ import {
 
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
-import { UserModel } from './user.model';
-import {ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private usersService: UserService) {}
 
-  @ApiQuery({name:'get all users', example:'all', type:String})
+  @ApiQuery({ name: 'get all users', example: 'all', type: String })
   @Get()
   getAllUsers() {
     return this.usersService.getAll();
   }
 
-  @ApiResponse({status:201, type:UserDto})
+  @ApiResponse({ status: 201, type: UserDto })
   @Post()
   createUser(@Body() createUserDto: UserDto) {
     return this.usersService.createUser(createUserDto);
