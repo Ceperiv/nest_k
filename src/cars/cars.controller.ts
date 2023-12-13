@@ -1,19 +1,19 @@
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 
 @Controller('tickets')
-export class TicketsController {
+export class CarsController {
   @Get()
-  getAllTickets() {}
+  getAllCars() {}
 
   @Get()
-  getTicketsByParams() {}
+  getCarsByParams() {}
 
   @Post()
-  postTickets() {}
+  postCars() {}
 
   @Put('/:id')
-  updateTicketsValues() {}
+  updateCarsValues() {}
 
   @Delete('/:id')
-  deleteTickets() {}
+  deleteCars() {}
 }
