@@ -1,7 +1,17 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { CarsModel } from '../cars/cars.model';
+import { RoleModel } from '../role/role.model';
+import { UserRoleModel } from '../role/user-role.model';
 
-@Table({ tableName: 'Users_' })
+@Table({ tableName: '_users' })
 export class UserModel extends Model<UserModel> {
   @Column({
     type: DataType.INTEGER,
@@ -23,9 +33,15 @@ export class UserModel extends Model<UserModel> {
   @Column({ type: DataType.STRING, allowNull: false })
   email: string;
 
+  @Column({ type: DataType.STRING, allowNull: false })
+  password: string;
+
   @Column({ type: DataType.STRING, allowNull: true })
   gender: string;
 
-  @Column({ type: DataType.BOOLEAN, allowNull: false })
-  isAdmin: boolean;
+  @HasMany(() => CarsModel)
+  cars: CarsModel[];
+
+  @BelongsToMany(() => RoleModel, () => UserRoleModel)
+  roles: RoleModel[];
 }

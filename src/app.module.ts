@@ -5,14 +5,13 @@ import { UserModule } from './users/user.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { UserModel } from './users/user.model';
-import { CustomerAssistanceController } from './customer-assistance/customer-assistance.controller';
-import { CustomerAssistanceModule } from './customer-assistance/customer-assistance.module';
-import { TicketsModule } from './tickets/tickets.module';
-import { TicketsController } from './tickets/tickets.controller';
+import { RoleModule } from './role/role.module';
+import { CarsModel } from './cars/cars.model';
+import { RoleModel } from './role/role.model';
+import { UserRoleModel } from './role/user-role.model';
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
@@ -23,13 +22,14 @@ import { TicketsController } from './tickets/tickets.controller';
       username: 'postgres',
       password: 'week',
       database: 'week',
-      models: [UserModel],
-      autoLoadModels: true,
+      models: [UserModel, CarsModel, RoleModel, UserRoleModel],
+      // autoLoadModels: true,
+      synchronize: true,
     }),
-    CustomerAssistanceModule,
-    TicketsModule,
+    UserModule,
+    RoleModule,
   ],
-  controllers: [AppController, CustomerAssistanceController, TicketsController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
