@@ -21,7 +21,7 @@ async function bootstrap() {
   async function syncDatabase() {
     try {
       const sequelize = app.get(Sequelize);
-      await sequelize.sync({ force: true });
+      await sequelize.sync({ alter: true });
       console.log('Tables have been created successfully.');
     } catch (error) {
       console.error('Error syncing tables:', error);
