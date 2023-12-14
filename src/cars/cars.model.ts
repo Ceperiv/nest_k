@@ -28,7 +28,7 @@ export class CarsModel extends Model<CarsModel> {
   @Column({ type: DataType.STRING, allowNull: false })
   color: string;
 
-  @Column({ type: DataType.NUMBER, allowNull: false })
+  @Column({ type: DataType.INTEGER, allowNull: false })
   price: number;
 
   @Column({ type: DataType.DATE, allowNull: true })

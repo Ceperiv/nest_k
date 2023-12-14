@@ -9,6 +9,7 @@ import { RoleModule } from './role/role.module';
 import { CarsModel } from './cars/cars.model';
 import { RoleModel } from './role/role.model';
 import { UserRoleModel } from './role/user-role.model';
+import { CarsModule } from './cars/cars.module';
 
 @Module({
   imports: [
@@ -23,11 +24,17 @@ import { UserRoleModel } from './role/user-role.model';
       password: 'week',
       database: 'week',
       models: [UserModel, CarsModel, RoleModel, UserRoleModel],
-      // autoLoadModels: true,
-      synchronize: true,
+      logging: console.log,
     }),
+    SequelizeModule.forFeature([
+      UserModel,
+      CarsModel,
+      RoleModel,
+      UserRoleModel,
+    ]),
     UserModule,
     RoleModule,
+    CarsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
