@@ -9,35 +9,36 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
+import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserModel } from './user.model';
-import {ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private usersService: UserService) {}
 
-  @ApiQuery({name:'get all users', example:'all', type:String})
+  @ApiQuery({ name: 'get all users', example: 'all', type: String })
   @Get()
   getAllUsers() {
     return this.usersService.getAll();
   }
 
-  @ApiResponse({status:201, type:UserDto})
+  @ApiResponse({ status: 201, type: UserModel })
   @Post()
-  createUser(@Body() createUserDto: UserDto) {
-    return this.usersService.createUser(createUserDto);
+  createUser(@Body() createUserModel: UserModel) {
+    return this.usersService.createUser(createUserModel);
   }
 
   @Get('many')
-  async GetManyByParams(@Query() obj: { UserDto }): Promise<UserDto[]> {
+  async GetManyByParams(
+    @Query() obj: { UserModel: UserModel },
+  ): Promise<UserModel[]> {
     return this.usersService.getManyByParams(obj);
   }
 
   @Put('/:id')
-  UpdateUser(@Param('id') id: number, @Body() updatedUser: UserDto) {
+  UpdateUser(@Param('id') id: number, @Body() updatedUser: UserModel) {
     return this.usersService.updateUserById(id, updatedUser);
   }
 

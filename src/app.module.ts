@@ -5,12 +5,14 @@ import { UserModule } from './users/user.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { UserModel } from './users/user.model';
-import { CustomerAssistanceController } from './customer-assistance/customer-assistance.controller';
-import { CustomerAssistanceModule } from './customer-assistance/customer-assistance.module';
+import { RoleModule } from './role/role.module';
+import { CarsModel } from './cars/cars.model';
+import { RoleModel } from './role/role.model';
+import { UserRoleModel } from './role/user-role.model';
+import { CarsModule } from './cars/cars.module';
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
@@ -21,12 +23,20 @@ import { CustomerAssistanceModule } from './customer-assistance/customer-assista
       username: 'postgres',
       password: 'week',
       database: 'week',
-      models: [UserModel],
-      autoLoadModels: true,
+      models: [UserModel, CarsModel, RoleModel, UserRoleModel],
+      logging: console.log,
     }),
-    CustomerAssistanceModule,
+    SequelizeModule.forFeature([
+      UserModel,
+      CarsModel,
+      RoleModel,
+      UserRoleModel,
+    ]),
+    UserModule,
+    RoleModule,
+    CarsModule,
   ],
-  controllers: [AppController, CustomerAssistanceController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
