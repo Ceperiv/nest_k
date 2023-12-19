@@ -44,7 +44,9 @@ export class UserService {
   }
 
   async findOne(email: string) {
-    return this.userRepository.findOne({ where: { email } });
+    const user = this.userRepository.findOne({ where: { email } });
+    console.log(user, 232323);
+    return user;
   }
 
   async getManyByParams(obj: { UserModel: UserModel }): Promise<UserModel[]> {
