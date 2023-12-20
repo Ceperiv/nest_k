@@ -19,13 +19,9 @@ export class UserService {
 
   async createUser(user: UserModel): Promise<UserModel> {
     try {
-      console.log(user, 121212121);
       const createdUser = await this.userRepository.create(user);
-      console.log(createdUser, 1111);
       const role = await this.roleService.getRole('CLIENT');
-      console.log(role, 2222);
       await createdUser.$set('roles', [role.id]);
-      console.log(createdUser, 333);
       return createdUser;
     } catch (err) {
       new BadRequestException({ message: 'Internal server err', code: 500 });
@@ -44,8 +40,7 @@ export class UserService {
   }
 
   async findOne(email: string) {
-    const user = this.userRepository.findOne({ where: { email } });
-    console.log(user, 232323);
+    const user = await this.userRepository.findOne({ where: { email } });
     return user;
   }
 

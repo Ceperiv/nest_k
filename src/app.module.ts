@@ -25,7 +25,6 @@ import { AuthModule } from './auth/auth.module';
       password: 'week',
       database: 'week',
       models: [UserModel, CarsModel, RoleModel, UserRoleModel],
-      logging: console.log,
     }),
     SequelizeModule.forFeature([
       UserModel,

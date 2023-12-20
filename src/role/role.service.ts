@@ -17,7 +17,6 @@ export class RoleService {
   }
 
   async createRole(role: RoleModel) {
-    console.log(2222222222);
     return this.roleRepository.create(role);
   }
 }
