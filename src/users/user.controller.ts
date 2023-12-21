@@ -7,17 +7,20 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
 import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserModel } from './user.model';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private usersService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
   @ApiQuery({ name: 'get all users', example: 'all', type: String })
   @Get()
   getAllUsers() {
