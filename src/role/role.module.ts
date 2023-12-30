@@ -8,7 +8,7 @@ import { UserRoleModel } from './user-role.model';
 
 @Module({
   imports: [SequelizeModule.forFeature([RoleModel, UserModel, UserRoleModel])],
-  exports: [RoleService],
+  exports: [RoleService, RoleModule],
   controllers: [RoleController],
   providers: [RoleService],
 })

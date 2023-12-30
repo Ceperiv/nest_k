@@ -9,10 +9,9 @@ export class RoleController {
   @Post()
   createRole(@Body() body: RoleModel) {
     try {
-      console.log(111111);
       return this.roleService.createRole(body);
     } catch (e) {
-      console.log(e, 333333);
+      console.log(e);
     }
   }
 

@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "62ff0677-fbb3-4be2-ad11-740c27d99c34",
+		"name": "nest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21801404"
+	},
+	"item": [
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "get_role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/role/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"role",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post_role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\":\"CLIENT\",\r\n    \"description\":\"only save and reading\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/role/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"role",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setTimeout(function(){\r",
+							"console.log('waiting')\r",
+							"\r",
+							"}, 2000)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set('userId', pm.response.json().id)\r",
+							"pm.test(\"isResponse\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.email).to.be.a('string');\r",
+							"    pm.expect(response.age).to.be.a('number')\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"isIdEqual\", function () {\r",
+							"    const userId = pm.environment.get('userId');\r",
+							"    pm.expect(userId).to.equal(pm.response.json().id)\r",
+							"    console.log('success. userId: ', userId)\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"vasyl999\",\r\n    \"age\":25,\r\n    \"email\":\"ceperiv1@gmail.com\",\r\n    \"gender\":\"mail\",\r\n    \"password\":\"1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local3000}}/users",
+					"host": [
+						"{{local3000}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set('auth-token', pm.response.json().access_token)\r",
+							"pm.test(\"isIdEqual\", function () {\r",
+							"    const token = pm.environment.get('auth-token');\r",
+							"    pm.expect(token).to.equal(pm.response.json().access_token)\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ceperiv1@gmail.com\",\r\n   \r\n    \"password\":\"1234567\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"isResponse\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    console.log(response)\r",
+							"    pm.expect(response.email).to.be.a('string');\r",
+							"    pm.expect(response.age).to.be.a('number')\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"isIdEqual\", function () {\r",
+							"    const userId = pm.environment.get('userId');\r",
+							"    pm.expect(userId).to.equal(pm.response.json().id)\r",
+							"    console.log('success. userId: ', userId)\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNlcGVyaXYxQGdtYWlsLmNvbSIsInN1YiI6NiwiaWF0IjoxNzAzMTYxMDU2fQ._Z6pD5dqcxWBTrkp5u_HbV3cnx-4eDRpz0NHzmFDg3Q",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{local3000}}/users/{{userId}}",
+					"host": [
+						"{{local3000}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users get all Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/users/many?name=Andryi&age=34",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"many"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Andryi"
+						},
+						{
+							"key": "age",
+							"value": "34"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Andryi\",\r\n    \"email\":\"ceperiv@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n    \"name\":\"Andryi2\",\r\n    \"email\":\"ceperiv12333333@gmail.com\",\r\n    \"age\":34\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/users/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -8,6 +8,7 @@ import { CarsModel } from '../cars/cars.model';
 import { RoleModel } from '../role/role.model';
 import { UserRoleModel } from '../role/user-role.model';
 import { RoleService } from '../role/role.service';
+import { RoleModule } from '../role/role.module';
 
 @Module({
   imports: [
@@ -17,8 +18,10 @@ import { RoleService } from '../role/role.service';
       RoleModel,
       UserRoleModel,
     ]),
+    RoleModule,
   ],
   providers: [UserService, RoleService],
   controllers: [UserController],
+  exports: [UserModule, UserService],
 })
 export class UserModule {}

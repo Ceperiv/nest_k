@@ -33,7 +33,7 @@ export class UserModel extends Model<UserModel> {
   @Column({ type: DataType.STRING, allowNull: false })
   email: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: false, unique: true })
   password: string;
 
   @Column({ type: DataType.STRING, allowNull: true })
